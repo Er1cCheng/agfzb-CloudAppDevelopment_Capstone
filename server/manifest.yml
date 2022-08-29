@@ -1,11 +1,11 @@
   applications:
-  - name: djangoapp
+  - name: hongzhechen02
     routes:
-      - route: hongzhechen02.us-east.cf.appdomain.cloud
+      - route: hongzhechen02.us-east.mybluemix.net
     memory: 128M
     buildpack: python_buildpack
-  - name: djangoapp-nginx
+  - name: hongzhechen02-nginx
     routes:
-      - route: hongzhechen02.us-east.cf.appdomain.cloud/static
+      - route: hongzhechen02.us-east.mybluemix.net/static
     memory: 128M
     buildpack: staticfile_buildpack
