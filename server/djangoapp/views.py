@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 # from .restapis import related methods
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+from cloudant.client import Cloudant
 from datetime import datetime
 import logging
 import json
@@ -83,7 +84,7 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
-        state = request.GET[state]
+        
         databaseName = "dealerships"
 
         client = Cloudant.iam(
@@ -92,10 +93,11 @@ def get_dealerships(request):
             connect=True,
         )
         db = client[databaseName];
-        if (state == "") :
+        if (not ("state" in request)) :
             docs = db.get_query_result()
             context["dealerships"] = docs
         else:
+            state = request["state"]
             selector = {'state': {'$eq': state}}
             docs = db.get_query_result(selector)
             context["dealerships"] = docs
