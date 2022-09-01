@@ -83,7 +83,24 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
-        return render(request, 'djangoapp/index.html', context)
+        state = request.GET[state]
+        databaseName = "dealerships"
+
+        client = Cloudant.iam(
+            account_name=dict["COUCH_USERNAME"],
+            api_key=dict["IAM_API_KEY"],
+            connect=True,
+        )
+        db = client[databaseName];
+        if (state == "") :
+            docs = db.get_query_result()
+            context["dealerships"] = docs
+        else:
+            selector = {'state': {'$eq': state}}
+            docs = db.get_query_result(selector)
+            context["dealerships"] = docs
+        
+        return render(request, 'djangoapp/dealer_list.html', context)
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
