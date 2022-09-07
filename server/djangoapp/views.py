@@ -95,11 +95,17 @@ def get_dealer_details(request, dealer_id):
     if request.method == "GET":
         context = {}
         url = "https://a3795162.eu-gb.apigw.appdomain.cloud/api2/getdealerships"
-        dealerships = get_dealers_from_cf(url)
-        context["dealership_list"] = dealerships
+        reviews = get_dealer_reviews_from_cf(url, id = dealer_id)
+        context["review_list"] = reviews
         return render(request, 'djangoapp/index.html', context)
 
 # Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
-# ...
+def add_review(request, dealer_id):
+    if request.method == "POST"
+        url = ""
+        post_request(url, id = dealer_id, name = request["name"], dealership = request["dealership"],
+                     purchase = request["purchase"], review = request["review"], another = request["another"],
+                     purchase_date = request["purchase_date"], car_make = request["car_make"],
+                     car_model = request["car_model"], car_year = request["car_year"])
+
 
